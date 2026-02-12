@@ -24,7 +24,7 @@ $success = '';if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($checkEmail->fetch()) {
                 $error = "This email is already registered.";
             } else {
-                // HARDENING: Hash the password before saving
+               
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
                 
                 $stmt = $pdo->prepare("INSERT INTO users (email, password) VALUES (?, ?)");
