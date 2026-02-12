@@ -1,15 +1,9 @@
 <?php
 require_once __DIR__ . '/../app/config.php';
-
-// 1. HARDENING: Access Control (Edge Case: Prevent direct URL access)
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
-
-// 2. SESSION TIMEOUT (Optional Hardening)
-// If the user is inactive for too long, we could log them out here.
-
 $email = $_SESSION['email'];
 ?>
 

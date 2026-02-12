@@ -1,7 +1,6 @@
-# Ignore sensitive config files
+
 app/config.php
 
-# Ignore system files
 /nbproject/
 /vendor/
 .DS_Store

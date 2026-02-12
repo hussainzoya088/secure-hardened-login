@@ -1,23 +1,16 @@
 <?php
-// 1. HARDENING: Display errors for debugging (Turn off for final submission)
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
-// 2. Link to Security Config and Functions
 require_once __DIR__ . '/../app/config.php';
 require_once __DIR__ . '/../app/functions.php';
 
-// 3. EDGE CASE: If already logged in, skip login page
 if (isset($_SESSION['user_id'])) {
     header("Location: dashboard.php");
     exit;
 }
 
 $error = '';
-
-// 4. SERVER-SIDE PROCESSING
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize input to prevent XSS
     $email = sanitizeInput($_POST['email']);
     $password = $_POST['password'];
 
@@ -25,15 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Please fill in all fields.";
     } else {
         try {
-            // SQL HARDENING: Prepared Statement to prevent SQL Injection
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
             $stmt->execute([$email]);
             $user = $stmt->fetch();
-
-            // Verify Password and User Existence
             if ($user && password_verify($password, $user['password'])) {
                 
-                // SESSION HARDENING: Prevent Session Fixation attacks
                 session_regenerate_id(true); 
                 
                 $_SESSION['user_id'] = $user['id'];
@@ -42,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header("Location: dashboard.php");
                 exit;
             } else {
-                // EDGE CASE: Generic error message to prevent account harvesting
                 $error = "Invalid email or password.";
             }
         } catch (PDOException $e) {

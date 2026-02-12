@@ -1,6 +1,6 @@
-# 1. Disable folder browsing
+
 Options -Indexes
 
-# 2. Protect the /app folder from direct web access
+
 RewriteEngine On
 RewriteRule ^app/.*$ - [F,L]

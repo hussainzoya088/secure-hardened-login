@@ -1,33 +1,23 @@
-<?php
-// 1. Debugging and Security Headers
-ini_set('display_errors', 1);
+<?phpini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 require_once __DIR__ . '/../app/config.php';
 require_once __DIR__ . '/../app/functions.php';
 
 $error = '';
-$success = '';
-
-// 2. SERVER-SIDE PROCESSING
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$success = '';if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = sanitizeInput($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-
-    // EDGE CASE: Password Match Check
     if ($password !== $confirm_password) {
         $error = "Passwords do not match.";
-    } 
-    // HARDENING: Password Strength Check (Edge Case: Short Passwords)
-    elseif (strlen($password) < 12) {
+    }     elseif (strlen($password) < 12) {
         $error = "Security Rule: Password must be at least 12 characters.";
     } 
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format.";
     } else {
         try {
-            // EDGE CASE: Check if email already exists
             $checkEmail = $pdo->prepare("SELECT id FROM users WHERE email = ?");
             $checkEmail->execute([$email]);
             

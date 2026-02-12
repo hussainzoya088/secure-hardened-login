@@ -7,7 +7,7 @@ function validateRegistration($email, $password) {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return "Invalid email format.";
     }
-    // HARDENING: Enforce strong passwords (min 12 chars)
+   
     if (strlen($password) < 12) {
         return "Security Rule: Password must be at least 12 characters.";
     }

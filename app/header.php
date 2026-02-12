@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <title>Secure Hardened App</title>
     <style>
-        /* CSS stays here - now it applies to every page! */
-        body { font-family: sans-serif; background: #f4ece8; margin: 0; display: flex; }
+                body { font-family: sans-serif; background: #f4ece8; margin: 0; display: flex; }
         .sidebar { width: 250px; height: 100vh; background: #6f4e37; color: white; padding: 20px; position: fixed; }
         .main-content { margin-left: 290px; padding: 40px; width: 100%; }
         .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
